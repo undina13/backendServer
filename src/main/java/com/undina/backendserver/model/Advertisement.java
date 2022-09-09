@@ -9,11 +9,11 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "advertisements")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,12 +21,16 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "description", nullable = false)
+    private String description;
 
-    @Column(name = "role", nullable = false)
-    private String role;
+    @Column(name = "contact", nullable = false)
+    private String contact;
 
-//    @Column(name = "contact", nullable = false)
-//    private String contact;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

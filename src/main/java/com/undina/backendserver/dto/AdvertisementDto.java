@@ -1,5 +1,7 @@
 package com.undina.backendserver.dto;
 
+import com.undina.backendserver.model.Status;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,14 +11,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class AdvertisementDto {
+
     private Long id;
 
     private String name;
 
-    private String email;
+    private String description;
 
-    private String role;
+    private String contact;
 
-  //  private String contact;
+    private Status status;
+
+    private String userId;
 }
