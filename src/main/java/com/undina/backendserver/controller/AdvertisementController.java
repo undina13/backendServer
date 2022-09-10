@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -35,8 +36,23 @@ public class AdvertisementController {
         }
         String uuidFileName = UUID.randomUUID().toString();
         String resultFileName = uuidFileName + "." + file.getOriginalFilename();
-        file.transferTo(new File(resultFileName));
+        file.transferTo(new File(uploadPath + "/" + resultFileName));
         advertisementDto.setImageFileName(resultFileName);
         return advertisementService.create(advertisementDto);
     }
+
+    @GetMapping("/{advertisementId}")
+    AdvertisementDto getAdvertisementById(@PathVariable long advertisementId) {
+        log.info("get advertisementId id={}", advertisementId);
+        return advertisementService.getAdvertisementById(advertisementId);
+    }
+
+    @PatchMapping("/{advertisementId}")
+    AdvertisementDto update(@NotBlank @RequestHeader("X-Sharer-User-Id") long userId,
+                            @PathVariable long advertisementId,
+                            @RequestBody AdvertisementDto advertisementDto) {
+        log.info("update advertisement id={}", advertisementId);
+        return advertisementService.update(userId, advertisementId, advertisementDto);
+    }
+
 }

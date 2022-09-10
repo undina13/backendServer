@@ -1,5 +1,6 @@
 package com.undina.backendserver.dto;
 
+import com.undina.backendserver.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,8 @@ public class UserDto {
 
     private String email;
 
-    private String role;
+    private Role role;
 
-  //  private String contact;
+    private String password;
+
 }
