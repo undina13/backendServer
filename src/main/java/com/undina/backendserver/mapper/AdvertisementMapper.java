@@ -13,6 +13,7 @@ public class AdvertisementMapper {
                 .description(advertisementDto.getDescription())
                 .contact(advertisementDto.getContact())
                 .status(advertisementDto.getStatus())
+                .imageFileName(advertisementDto.getImageFileName())
                 .build();
     }
 
@@ -23,6 +24,7 @@ public class AdvertisementMapper {
                 .description(advertisement.getDescription())
                 .contact(advertisement.getContact())
                 .status(advertisement.getStatus())
+                .imageFileName(advertisement.getImageFileName())
                 .build();
     }
 }
