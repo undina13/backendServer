@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -33,11 +34,12 @@ public class AdvertisementController {
             if (!uploadFolder.exists()) {
                 uploadFolder.mkdir();
             }
+            String uuidFileName = UUID.randomUUID().toString();
+            String resultFileName = uuidFileName + "." + file.getOriginalFilename();
+            file.transferTo(new File(uploadPath + "/" + resultFileName));
+            advertisementDto.setImageFileName(resultFileName);
         }
-        String uuidFileName = UUID.randomUUID().toString();
-        String resultFileName = uuidFileName + "." + file.getOriginalFilename();
-        file.transferTo(new File(uploadPath + "/" + resultFileName));
-        advertisementDto.setImageFileName(resultFileName);
+
         return advertisementService.create(advertisementDto);
     }
 
@@ -45,6 +47,24 @@ public class AdvertisementController {
     AdvertisementDto getAdvertisementById(@PathVariable long advertisementId) {
         log.info("get advertisementId id={}", advertisementId);
         return advertisementService.getAdvertisementById(advertisementId);
+    }
+
+    @GetMapping()
+    List<AdvertisementDto> getAll() {
+        log.info("get all advertisements ");
+        return advertisementService.getAllAdvertisements();
+    }
+
+    @GetMapping("/active")
+    List<AdvertisementDto> getAllByStatusActive() {
+        log.info("get all advertisements by Statius ACTIVE ");
+        return advertisementService.getAllByStatusActive();
+    }
+
+    @GetMapping("/user/{userId}")
+    List<AdvertisementDto> getAllByUser(@PathVariable long userId) {
+        log.info("get all advertisements ");
+        return advertisementService.getAllByUser(userId);
     }
 
     @PatchMapping("/{advertisementId}")

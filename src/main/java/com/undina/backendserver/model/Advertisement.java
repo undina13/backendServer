@@ -33,9 +33,9 @@ public class Advertisement {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+  //  @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private User owner;
 
-    @Column(name = "imageFileName")
+    @Column(name = "image_file_name")
     private String imageFileName;
 }

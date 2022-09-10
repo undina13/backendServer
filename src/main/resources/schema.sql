@@ -16,10 +16,9 @@ CREATE TABLE IF NOT EXISTS advertisements (
                                      description VARCHAR(255) NOT NULL,
                                      contact VARCHAR(255) NOT NULL,
                                      status VARCHAR(512) NOT NULL,
-
-                                     user_id BIGINT NOT NULL,
-                                     imageFileName VARCHAR(512),
-                                     CONSTRAINT pk_item PRIMARY KEY (id),
-                                     CONSTRAINT fk_owner FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+                                     owner_id BIGINT NOT NULL,
+                                     image_file_name VARCHAR(512),
+                                     CONSTRAINT pk_advertisement PRIMARY KEY (id),
+                                     CONSTRAINT fk_user FOREIGN KEY (owner_id) REFERENCES users (id)
 );
 

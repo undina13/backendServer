@@ -2,11 +2,18 @@ package com.undina.backendserver.mapper;
 
 import com.undina.backendserver.dto.AdvertisementDto;
 import com.undina.backendserver.model.Advertisement;
+import com.undina.backendserver.repository.AdvertisementRepository;
 import lombok.experimental.UtilityClass;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 @UtilityClass
 public class AdvertisementMapper {
+
+
     public static Advertisement toAdvertisement(AdvertisementDto advertisementDto) {
+
+
         return Advertisement.builder()
                 .id(advertisementDto.getId())
                 .name(advertisementDto.getName())
@@ -24,6 +31,7 @@ public class AdvertisementMapper {
                 .description(advertisement.getDescription())
                 .contact(advertisement.getContact())
                 .status(advertisement.getStatus())
+                .owner(advertisement.getOwner().getId())
                 .imageFileName(advertisement.getImageFileName())
                 .build();
     }

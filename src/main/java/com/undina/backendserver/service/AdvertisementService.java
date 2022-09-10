@@ -6,11 +6,15 @@ import com.undina.backendserver.exception.UserIsNotOwnerException;
 import com.undina.backendserver.exception.UserNotFoundException;
 import com.undina.backendserver.mapper.AdvertisementMapper;
 import com.undina.backendserver.model.Advertisement;
+import com.undina.backendserver.model.Status;
 import com.undina.backendserver.model.User;
 import com.undina.backendserver.repository.AdvertisementRepository;
 import com.undina.backendserver.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,8 +29,11 @@ public class AdvertisementService {
 
     @Transactional
     public AdvertisementDto create(AdvertisementDto advertisementDto) {
+        Advertisement advertisement = AdvertisementMapper.toAdvertisement(advertisementDto);
+        advertisement.setOwner(userRepository.findById(advertisementDto.getOwner())
+                .orElseThrow(()-> new UserNotFoundException("user not found")));
         return AdvertisementMapper.toAdvertisementDto(advertisementRepository
-                .save(AdvertisementMapper.toAdvertisement(advertisementDto)));
+                .save(advertisement));
     }
 
     public AdvertisementDto getAdvertisementById(long advertisementId) {
@@ -40,10 +47,35 @@ public class AdvertisementService {
         // нельзя изменить вещь, если ее нет в хранилище  или нет такого пользователя или вещь чужая
         Advertisement advertisement = advertisementRepository.findById(advertisementId)
                 .orElseThrow(() -> new AdvertisementNotFoundException("advertisement not found"));
-        if (!owner.equals(advertisement.getUser())) {
+        if (!owner.equals(advertisement.getOwner())) {
             throw new UserIsNotOwnerException("Вы пытаетесь изменить чужую вещь");
         }
+        Advertisement advertisementToUpdate = AdvertisementMapper.toAdvertisement(advertisementDto);
+        advertisementToUpdate.setOwner(owner);
         return AdvertisementMapper.toAdvertisementDto(advertisementRepository
-                .save(AdvertisementMapper.toAdvertisement(advertisementDto)));
+                .save(advertisementToUpdate));
+    }
+
+    public List<AdvertisementDto> getAllAdvertisements() {
+        return advertisementRepository
+                .findAll()
+                .stream()
+                .map(AdvertisementMapper::toAdvertisementDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<AdvertisementDto> getAllByStatusActive() {
+        return advertisementRepository.findAllByStatus(Status.ACTIVE)
+                .stream()
+                .map(AdvertisementMapper::toAdvertisementDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<AdvertisementDto> getAllByUser(long userId) {
+        User owner =  userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("user not found"));
+        return advertisementRepository.findAllByOwner(owner)
+                .stream()
+                .map(AdvertisementMapper::toAdvertisementDto)
+                .collect(Collectors.toList());
     }
 }

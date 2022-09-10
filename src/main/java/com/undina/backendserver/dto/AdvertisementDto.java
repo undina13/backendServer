@@ -26,7 +26,7 @@ public class AdvertisementDto {
 
     private Status status;
 
-    private String userId;
+    private Long owner;
 
     private String imageFileName;
 }
