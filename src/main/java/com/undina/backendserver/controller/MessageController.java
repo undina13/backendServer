@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(path = "/messages")
-@Tag(name = "Message Controller")
+@Tag(name = "Message Controller" , description="Реализует обмен сообщениями между пользователями")
 public class MessageController {
     private final MessageService messageService;
 

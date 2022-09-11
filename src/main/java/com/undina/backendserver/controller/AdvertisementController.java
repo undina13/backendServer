@@ -2,6 +2,7 @@ package com.undina.backendserver.controller;
 
 import com.undina.backendserver.dto.AdvertisementDto;
 import com.undina.backendserver.service.AdvertisementService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping(path = "/advertisements")
-@Tag(name = "Advertisement Controller")
+@Tag(name = "Advertisement Controller", description = "Отвечает за размещение и показ объявлений")
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
     @Value("${upload.path}")
@@ -27,6 +28,10 @@ public class AdvertisementController {
         this.advertisementService = advertisementService;
     }
 
+    @Operation(
+            summary = "Создание объявления",
+            description = "Позволяет создать объявление"
+    )
     @PostMapping
     @PreAuthorize("hasAuthority('user')")
     AdvertisementDto create(@RequestBody AdvertisementDto advertisementDto,
@@ -45,6 +50,10 @@ public class AdvertisementController {
         return advertisementService.create(advertisementDto);
     }
 
+    @Operation(
+            summary = "Получение объявления",
+            description = "Позволяет получить объявление по Id"
+    )
     @GetMapping("/{advertisementId}")
     @PreAuthorize("hasAuthority('user')")
     AdvertisementDto getAdvertisementById(@PathVariable long advertisementId) {
@@ -52,6 +61,10 @@ public class AdvertisementController {
         return advertisementService.getAdvertisementById(advertisementId);
     }
 
+    @Operation(
+            summary = "Получение списка объявлений для главной страницы",
+            description = "Позволяет получить список всех объявлений "
+    )
     @GetMapping()
     @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAll() {
@@ -59,6 +72,10 @@ public class AdvertisementController {
         return advertisementService.getAllAdvertisements();
     }
 
+    @Operation(
+            summary = "Получение списка объявлений для главной страницы",
+            description = "Позволяет получить список всех объявлений с сортировкой по наименованию"
+    )
     @GetMapping("/sort/name")
     @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAllSortedByName() {
@@ -66,6 +83,10 @@ public class AdvertisementController {
         return advertisementService.getAllAdvertisementsSortedByName();
     }
 
+    @Operation(
+            summary = "Получение списка объявлений для главной страницы",
+            description = "Позволяет получить список всех объявлений с сортировкой по создателю объявления"
+    )
     @GetMapping("/sort/owner")
     @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAllSortedByOwner() {
@@ -73,6 +94,10 @@ public class AdvertisementController {
         return advertisementService.getAllAdvertisementsSortedByOwner();
     }
 
+    @Operation(
+            summary = "Получение списка объявлений для главной страницы",
+            description = "Позволяет получить список всех активных объявлений"
+    )
     @GetMapping("/active")
     @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAllByStatusActive() {
@@ -80,6 +105,10 @@ public class AdvertisementController {
         return advertisementService.getAllByStatusActive();
     }
 
+    @Operation(
+            summary = "Получение списка объявлений для юзера",
+            description = "Позволяет получить список всех объявлений, созданных определенным пользователем "
+    )
     @GetMapping("/user/{userId}")
     @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAllByUser(@PathVariable long userId) {
@@ -87,6 +116,10 @@ public class AdvertisementController {
         return advertisementService.getAllByUser(userId);
     }
 
+    @Operation(
+            summary = "Изменение объявления",
+            description = "Позволяет изменить объявление"
+    )
     @PatchMapping("/{advertisementId}")
     @PreAuthorize("hasAuthority('user')")
     AdvertisementDto update(@PathVariable long advertisementId,

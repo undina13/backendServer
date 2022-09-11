@@ -2,6 +2,7 @@ package com.undina.backendserver.controller;
 
 import com.undina.backendserver.dto.UserDto;
 import com.undina.backendserver.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(path = "/users")
-@Tag(name = "User Controller")
+@Tag(name = "User Controller", description = "Отвечает за пользователей")
 public class UserController {
     private final UserService userService;
 
@@ -22,12 +23,20 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(
+            summary = "Создание пользователя",
+            description = "Позволяет создать пользователя"
+    )
     @PostMapping
     UserDto create(@RequestBody UserDto userDto) {
         log.info("create user");
         return userService.create(userDto);
     }
 
+    @Operation(
+            summary = "Изменение пользователя",
+            description = "Позволяет изменить пользователя"
+    )
     @PatchMapping("/{userId}")
     @PreAuthorize("hasAuthority('admin')")
     public UserDto update(@PathVariable Long userId, @RequestBody UserDto userDto) {
@@ -35,6 +44,10 @@ public class UserController {
         return userService.update(userId, userDto);
     }
 
+    @Operation(
+            summary = "Удаление пользователя",
+            description = "Позволяет удалить пользователя"
+    )
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasAuthority('admin')")
     public void delete(@PathVariable Long userId) {
@@ -42,6 +55,10 @@ public class UserController {
         userService.delete(userId);
     }
 
+    @Operation(
+            summary = "Получение пользователя",
+            description = "Позволяет получить пользователя по Id"
+    )
     @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('user')")
     public UserDto getUserById(@PathVariable Long userId) {
@@ -49,6 +66,10 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
+    @Operation(
+            summary = "Получение всех пользователей",
+            description = "Получение списка всех пользователей"
+    )
     @GetMapping
     @PreAuthorize("hasAuthority('user')")
     public List<UserDto> getAllUsers() {
