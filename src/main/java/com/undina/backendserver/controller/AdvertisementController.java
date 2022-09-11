@@ -4,6 +4,7 @@ import com.undina.backendserver.dto.AdvertisementDto;
 import com.undina.backendserver.service.AdvertisementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,7 @@ public class AdvertisementController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('user')")
     AdvertisementDto create(@RequestBody AdvertisementDto advertisementDto,
                             @RequestParam("file") MultipartFile file) throws IOException {
         log.info("create advertisement");
@@ -44,30 +46,35 @@ public class AdvertisementController {
     }
 
     @GetMapping("/{advertisementId}")
+    @PreAuthorize("hasAuthority('user')")
     AdvertisementDto getAdvertisementById(@PathVariable long advertisementId) {
         log.info("get advertisementId id={}", advertisementId);
         return advertisementService.getAdvertisementById(advertisementId);
     }
 
     @GetMapping()
+    @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAll() {
         log.info("get all advertisements ");
         return advertisementService.getAllAdvertisements();
     }
 
     @GetMapping("/active")
+    @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAllByStatusActive() {
         log.info("get all advertisements by Statius ACTIVE ");
         return advertisementService.getAllByStatusActive();
     }
 
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAllByUser(@PathVariable long userId) {
         log.info("get all advertisements ");
         return advertisementService.getAllByUser(userId);
     }
 
     @PatchMapping("/{advertisementId}")
+    @PreAuthorize("hasAuthority('user')")
     AdvertisementDto update(@NotBlank @RequestHeader("X-Sharer-User-Id") long userId,
                             @PathVariable long advertisementId,
                             @RequestBody AdvertisementDto advertisementDto) {

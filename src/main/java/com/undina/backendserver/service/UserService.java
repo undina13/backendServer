@@ -55,7 +55,7 @@ public class UserService  {
                 .orElseThrow(() -> new UserNotFoundException("User not found")));
     }
 
-
+    @Transactional
     public UserDto getUserById(Long userId) {
         return UserMapper.toUserDto(userRepository.findById(userId)
                 .orElseThrow((() -> new UserNotFoundException("user not found"))));
