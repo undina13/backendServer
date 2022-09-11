@@ -13,6 +13,7 @@ import com.undina.backendserver.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,6 +76,24 @@ public class AdvertisementService {
         User owner =  userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("user not found"));
         return advertisementRepository.findAllByOwner(owner)
                 .stream()
+                .map(AdvertisementMapper::toAdvertisementDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<AdvertisementDto> getAllAdvertisementsSortedByName() {
+        return advertisementRepository
+                .findAll()
+                .stream()
+                .sorted(Comparator.comparing(Advertisement::getName))
+                .map(AdvertisementMapper::toAdvertisementDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<AdvertisementDto> getAllAdvertisementsSortedByOwner() {
+        return advertisementRepository
+                .findAll()
+                .stream()
+                .sorted(Comparator.comparing(advertisement -> advertisement.getOwner().getId()))
                 .map(AdvertisementMapper::toAdvertisementDto)
                 .collect(Collectors.toList());
     }

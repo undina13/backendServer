@@ -59,6 +59,20 @@ public class AdvertisementController {
         return advertisementService.getAllAdvertisements();
     }
 
+    @GetMapping("/sort/name")
+    @PreAuthorize("hasAuthority('user')")
+    List<AdvertisementDto> getAllSortedByName() {
+        log.info("get all advertisements sorted by name ");
+        return advertisementService.getAllAdvertisementsSortedByName();
+    }
+
+    @GetMapping("/sort/owner")
+    @PreAuthorize("hasAuthority('user')")
+    List<AdvertisementDto> getAllSortedByOwner() {
+        log.info("get all advertisements sorted by owner ");
+        return advertisementService.getAllAdvertisementsSortedByOwner();
+    }
+
     @GetMapping("/active")
     @PreAuthorize("hasAuthority('user')")
     List<AdvertisementDto> getAllByStatusActive() {
