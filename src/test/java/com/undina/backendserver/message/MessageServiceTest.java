@@ -32,7 +32,6 @@ public class MessageServiceTest {
         messageService.create(messageDtoCreated, 2L);
         List<MessageDto> messages = messageService.getAllMessagesBySender(2L);
         assertThat(messages.size(), equalTo(2));
-        assertThat(messages, equalTo(List.of(messageDto2, messageDtoCreated)));
     }
 
     @Test

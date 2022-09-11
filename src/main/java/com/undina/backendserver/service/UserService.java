@@ -60,4 +60,10 @@ public class UserService  {
         return UserMapper.toUserDto(userRepository.findById(userId)
                 .orElseThrow((() -> new UserNotFoundException("user not found"))));
     }
+
+    @Transactional
+    public UserDto getUserEmail(String email) {
+        return UserMapper.toUserDto(userRepository.findByEmail(email)
+                .orElseThrow((() -> new UserNotFoundException("user not found"))));
+    }
 }
