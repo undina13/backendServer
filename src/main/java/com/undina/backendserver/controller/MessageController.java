@@ -3,6 +3,7 @@ package com.undina.backendserver.controller;
 import com.undina.backendserver.dto.MessageDto;
 import com.undina.backendserver.model.User;
 import com.undina.backendserver.service.MessageService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class MessageController {
         this.messageService = messageService;
     }
 
+
+    @Operation(
+            summary = "Создание сообщения",
+            description = "Позволяет создать сообщение"
+    )
     @PostMapping
     @PreAuthorize("hasAuthority('user')")
     MessageDto create(@RequestBody MessageDto messageDto) {
@@ -32,6 +38,10 @@ public class MessageController {
         return messageService.create(messageDto, sender.getId());
     }
 
+    @Operation(
+            summary = "Список исходящих сообщений",
+            description = "Пользователь может получить список его исходящих сообщений"
+    )
     @GetMapping("/sender")
     @PreAuthorize("hasAuthority('user')")
     List<MessageDto> getAllBySender() {
@@ -40,6 +50,10 @@ public class MessageController {
         return messageService.getAllMessagesBySender(sender.getId());
     }
 
+    @Operation(
+            summary = "Список входящих сообщений",
+            description = "Пользователь может получить список его входящих сообщений"
+    )
     @GetMapping("/recipient")
     @PreAuthorize("hasAuthority('user')")
     List<MessageDto> getAllByRecipient() {
@@ -48,6 +62,10 @@ public class MessageController {
         return messageService.getAllMessagesBySender(recipient.getId());
     }
 
+    @Operation(
+            summary = "Список всех сообщений",
+            description = "Пользователь может получить список всех своих сообщений - входящих и исходящих"
+    )
     @GetMapping()
     @PreAuthorize("hasAuthority('user')")
     List<MessageDto> getAllBySenderOrRecipient() {
