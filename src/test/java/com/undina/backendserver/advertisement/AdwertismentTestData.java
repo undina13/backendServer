@@ -2,11 +2,8 @@ package com.undina.backendserver.advertisement;
 
 
 import com.undina.backendserver.dto.AdvertisementDto;
-import com.undina.backendserver.dto.UserDto;
 import com.undina.backendserver.model.Advertisement;
-import com.undina.backendserver.model.Role;
 import com.undina.backendserver.model.Status;
-import com.undina.backendserver.model.User;
 
 import static com.undina.backendserver.user.UserTestData.user1;
 
@@ -24,8 +21,10 @@ public class AdwertismentTestData {
             AdvertisementDto.builder().id(4L).name("name4").description("description4").contact("contact4")
                     .status(Status.ACTIVE).owner(2L).build();
 
-    public static final Advertisement advertisement1 =   Advertisement.builder().id(1L).name("name1").description("description1").contact("contact1")
+    public static final Advertisement advertisement1 = Advertisement.builder().id(1L).name("name1")
+            .description("description1").contact("contact1")
             .status(Status.ACTIVE).owner(user1).build();
-    public static final Advertisement advertisement2 =   Advertisement.builder().id(2L).name("name2").description("description2").contact("contact2")
+    public static final Advertisement advertisement2 = Advertisement.builder().id(2L).name("name2")
+            .description("description2").contact("contact2")
             .status(Status.CANCELED).owner(user1).build();
 }

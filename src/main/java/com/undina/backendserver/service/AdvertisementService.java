@@ -32,7 +32,7 @@ public class AdvertisementService {
     public AdvertisementDto create(AdvertisementDto advertisementDto) {
         Advertisement advertisement = AdvertisementMapper.toAdvertisement(advertisementDto);
         advertisement.setOwner(userRepository.findById(advertisementDto.getOwner())
-                .orElseThrow(()-> new UserNotFoundException("user not found")));
+                .orElseThrow(() -> new UserNotFoundException("user not found")));
         return AdvertisementMapper.toAdvertisementDto(advertisementRepository
                 .save(advertisement));
     }
@@ -43,8 +43,9 @@ public class AdvertisementService {
         return AdvertisementMapper.toAdvertisementDto(advertisement);
     }
 
-    public AdvertisementDto update( long advertisementId, AdvertisementDto advertisementDto) {
-        User owner = userRepository.findById(advertisementDto.getOwner()).orElseThrow(() -> new UserNotFoundException("user not found"));
+    public AdvertisementDto update(long advertisementId, AdvertisementDto advertisementDto) {
+        User owner = userRepository.findById(advertisementDto.getOwner())
+                .orElseThrow(() -> new UserNotFoundException("user not found"));
 
         Advertisement advertisement = advertisementRepository.findById(advertisementId)
                 .orElseThrow(() -> new AdvertisementNotFoundException("advertisement not found"));

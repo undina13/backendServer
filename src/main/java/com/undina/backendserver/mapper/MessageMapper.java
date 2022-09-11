@@ -8,14 +8,14 @@ import java.time.format.DateTimeFormatter;
 
 @UtilityClass
 public class MessageMapper {
-    public static Message toMessage(MessageDto messageDto){
+    public static Message toMessage(MessageDto messageDto) {
         return Message.builder()
                 .id(messageDto.getId())
                 .msg(messageDto.getMsg())
                 .build();
     }
 
-    public static MessageDto toMessageDto(Message message){
+    public static MessageDto toMessageDto(Message message) {
         return MessageDto.builder()
                 .id(message.getId())
                 .sender(message.getSender().getId())

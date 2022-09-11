@@ -1,11 +1,7 @@
 package com.undina.backendserver.message;
 
-import com.undina.backendserver.dto.AdvertisementDto;
 import com.undina.backendserver.dto.MessageDto;
-import com.undina.backendserver.exception.AdvertisementNotFoundException;
 import com.undina.backendserver.exception.UserNotFoundException;
-import com.undina.backendserver.model.Status;
-import com.undina.backendserver.service.AdvertisementService;
 import com.undina.backendserver.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -16,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.undina.backendserver.advertisement.AdwertismentTestData.*;
 import static com.undina.backendserver.message.MessageTestData.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -40,7 +35,7 @@ public class MessageServiceTest {
         assertThat(messages, equalTo(List.of(messageDto2, messageDtoCreated)));
     }
 
-        @Test
+    @Test
     void testCreateWrongId() {
         assertThrows(UserNotFoundException.class, () -> messageService.getAllMessagesBySender(200L));
     }

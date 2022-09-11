@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +40,6 @@ public class AdvertisementController {
             file.transferTo(new File(uploadPath + "/" + resultFileName));
             advertisementDto.setImageFileName(resultFileName);
         }
-
         return advertisementService.create(advertisementDto);
     }
 
@@ -94,5 +92,4 @@ public class AdvertisementController {
         log.info("update advertisement id={}", advertisementId);
         return advertisementService.update(advertisementId, advertisementDto);
     }
-
 }

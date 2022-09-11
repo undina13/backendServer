@@ -1,18 +1,14 @@
 package com.undina.backendserver.controller;
 
-import com.undina.backendserver.dto.AdvertisementDto;
 import com.undina.backendserver.dto.MessageDto;
-import com.undina.backendserver.dto.UserDto;
 import com.undina.backendserver.model.User;
 import com.undina.backendserver.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -49,6 +45,7 @@ public class MessageController {
         User recipient = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return messageService.getAllMessagesBySender(recipient.getId());
     }
+
     @GetMapping()
     @PreAuthorize("hasAuthority('user')")
     List<MessageDto> getAllBySenderOrRecipient() {

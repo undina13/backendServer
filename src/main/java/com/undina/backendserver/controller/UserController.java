@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-  @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     public void delete(@PathVariable Long userId) {
         log.info("delete user id={}", userId);
         userService.delete(userId);
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @GetMapping
-   @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAuthority('user')")
     public List<UserDto> getAllUsers() {
         log.info("get all users");
         return userService.getAllUsers();
