@@ -3,6 +3,7 @@ package com.undina.backendserver.controller;
 import com.undina.backendserver.dto.MessageDto;
 import com.undina.backendserver.model.User;
 import com.undina.backendserver.service.MessageService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(path = "/messages")
+@Tag(name = "Message Controller")
 public class MessageController {
     private final MessageService messageService;
 

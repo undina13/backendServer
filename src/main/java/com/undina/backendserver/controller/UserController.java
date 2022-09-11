@@ -2,6 +2,7 @@ package com.undina.backendserver.controller;
 
 import com.undina.backendserver.dto.UserDto;
 import com.undina.backendserver.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(path = "/users")
+@Tag(name = "User Controller")
 public class UserController {
     private final UserService userService;
 
