@@ -52,7 +52,7 @@ public class AdvertisementServiceTest {
     @DirtiesContext
     void testUpdateAdvertisement() {
         advertisementDto2.setStatus(Status.ACTIVE);
-        AdvertisementDto advertisementDtoFromSQL = advertisementService.update(1, 2, advertisementDto2);
+        AdvertisementDto advertisementDtoFromSQL = advertisementService.update( 2, advertisementDto2);
         assertThat(advertisementDtoFromSQL, equalTo(advertisementDto2));
         advertisementDto2.setStatus(Status.CANCELED);
     }
@@ -60,7 +60,7 @@ public class AdvertisementServiceTest {
     @Test
     void testUpdateAdvertisementNotFound() {
         assertThrows(AdvertisementNotFoundException.class,
-                () -> advertisementService.update(1, 20L, advertisementDto2));
+                () -> advertisementService.update( 20L, advertisementDto2));
     }
 
 

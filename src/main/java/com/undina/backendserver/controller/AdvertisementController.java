@@ -89,11 +89,10 @@ public class AdvertisementController {
 
     @PatchMapping("/{advertisementId}")
     @PreAuthorize("hasAuthority('user')")
-    AdvertisementDto update(@NotBlank @RequestHeader("X-Sharer-User-Id") long userId,
-                            @PathVariable long advertisementId,
+    AdvertisementDto update(@PathVariable long advertisementId,
                             @RequestBody AdvertisementDto advertisementDto) {
         log.info("update advertisement id={}", advertisementId);
-        return advertisementService.update(userId, advertisementId, advertisementDto);
+        return advertisementService.update(advertisementId, advertisementDto);
     }
 
 }

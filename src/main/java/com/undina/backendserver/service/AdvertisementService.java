@@ -43,9 +43,9 @@ public class AdvertisementService {
         return AdvertisementMapper.toAdvertisementDto(advertisement);
     }
 
-    public AdvertisementDto update(long userId, long advertisementId, AdvertisementDto advertisementDto) {
-        User owner = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("user not found"));
-        // нельзя изменить вещь, если ее нет в хранилище  или нет такого пользователя или вещь чужая
+    public AdvertisementDto update( long advertisementId, AdvertisementDto advertisementDto) {
+        User owner = userRepository.findById(advertisementDto.getOwner()).orElseThrow(() -> new UserNotFoundException("user not found"));
+
         Advertisement advertisement = advertisementRepository.findById(advertisementId)
                 .orElseThrow(() -> new AdvertisementNotFoundException("advertisement not found"));
         if (!owner.equals(advertisement.getOwner())) {
